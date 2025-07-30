@@ -17,10 +17,18 @@ function showInfoPanel(city) {
   var infoPanel = document.getElementById('info-panel');
   var html = '<h2>' + city.name + '</h2><table>';
   for (var key in city) {
-    if (['name', 'lat', 'lng', 'markerNumber'].includes(key)) continue;
+    if (['name', 'lat', 'lng', 'markerNumber', 'weighted FDI'].includes(key)) continue;
     html += '<tr><th>' + key + '</th><td>' + city[key] + '</td></tr>';
   }
+  
+  // 单独显示 weighted FDI，字体更大
+  if (city['weighted FDI']) {
+    html += "<tr><th colspan='2'>Weighted FDI</th></tr>";
+    html += "<tr><th colspan='2'>" + city['weighted FDI'] + "</th></tr>";
+  }
+  
   html += '</table>';
+
   infoPanel.innerHTML = html;
   infoPanel.classList.remove('hidden');
 }
@@ -37,25 +45,23 @@ fetch('cities.json')
     cities.sort(function(a, b) {
       return parseFloat(b['weighted FDI']) - parseFloat(a['weighted FDI']);
     });
-    // 添加编号
-    cities.forEach(function(city, idx) {
-      city.markerNumber = idx + 1;
-    });
-    // 自定义带数字的marker
-    var NumberedIcon = L.DivIcon.extend({
-      options: {
-        className: 'numbered-marker',
-        iconSize: [30, 42],
-        iconAnchor: [15, 42],
-        popupAnchor: [0, -36]
-      }
-    });
+    
     cities.forEach(function(city) {
-      var marker = L.marker([city.lat, city.lng], {
-        icon: new NumberedIcon({
-          html: '<div style="background:#2a93ee;color:#fff;border-radius:50%;width:28px;height:28px;line-height:28px;text-align:center;font-weight:bold;font-size:15px;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.15);margin-top:7px;">' + city.markerNumber + '</div>'
-        })
-      }).addTo(map);
+      // 根据 weighted FDI 值设置不同颜色的标记
+      var fdiValue = parseFloat(city['weighted FDI']) || 0;
+      var markerClass;
+      
+      if (fdiValue > 50) {
+        markerClass = 'marker-strong'; // 深绿色 - 足球发展最强
+      } else if (fdiValue > 30) {
+        markerClass = 'marker-medium'; // 橙色 - 足球发展中等
+      } else {
+        markerClass = 'marker-weak'; // 浅灰色 - 足球发展较弱
+      }
+      
+      // 使用默认的 Leaflet 标记，通过 CSS 类来改变颜色
+      var marker = L.marker([city.lat, city.lng]).addTo(map);
+      marker.getElement().classList.add(markerClass);
       marker.on('click', function() {
         showInfoPanel(city);
       });

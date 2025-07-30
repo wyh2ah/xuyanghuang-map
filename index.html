@@ -2,15 +2,153 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
-  <title>世界足球城市地图</title>
+  <title>世界足球城市地图 - 欢迎</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./leaflet.css" />
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Microsoft YaHei', Arial, sans-serif;
+      background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                  url('bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 800px;
+      padding: 40px;
+      border-radius: 20px;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 1.5rem;
+      margin-bottom: 40px;
+      line-height: 1.6;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      color: #f8f9fa;
+    }
+
+    .enter-btn {
+      display: inline-block;
+      padding: 16px 40px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: rgb(0, 0, 0);
+      background: #ffffff;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+
+    .enter-btn:active {
+      transform: translateY(-1px);
+    }
+
+    .enter-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .enter-btn:hover::before {
+      left: 100%;
+    }
+
+    .features {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .feature {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 15px;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      min-width: 200px;
+    }
+
+    .feature h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: #4ecdc4;
+    }
+
+    .feature p {
+      font-size: 0.9rem;
+      color: #e9ecef;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        margin: 20px;
+        padding: 30px 20px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+      }
+
+      .features {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .feature {
+        min-width: 250px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div id="map"></div>
-  <div id="info-panel" class="hidden"></div>
-  <script src="./leaflet.js"></script>
-  <script src="main.js"></script>
+  <div class="container">
+    <p class="subtitle">
+        The Football Development Index (FDI) is a weighted composite score on a scale from 0 to 100 that quantitatively reflects the overall level of football development in a city, with higher values indicating stronger infrastructure, participation, and industry maturity.
+    </p>
+    
+    <a href="map.html" class="enter-btn">开始探索</a>
+    
+  </div>
 </body>
 </html>
