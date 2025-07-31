@@ -84,12 +84,22 @@
       justify-content: center;
     }
 
+    .top-nav-buttons {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 16px;
+      z-index: 1000;
+    }
+
     .nav-btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 12px;
       padding: 20px 60px;
-      font-size: 16px;
+      font-size: 20px;
       font-weight: 600;
       text-decoration: none;
       color: white;
@@ -106,6 +116,34 @@
       overflow: hidden;
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
       min-width: 280px;
+    }
+
+    .top-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      color: white;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .top-nav-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
     }
 
     .nav-btn::before {
@@ -217,21 +255,36 @@
         min-width: 250px;
       }
 
+      .top-nav-buttons {
+        top: 15px;
+        right: 15px;
+        gap: 12px;
+      }
+
+      .top-nav-btn {
+        padding: 10px 16px;
+        font-size: 13px;
+      }
+
+      .top-nav-btn .icon {
+        width: 16px;
+        height: 16px;
+      }
+
       .nav-buttons {
         bottom: 30px;
         gap: 16px;
-        flex-direction: column;
-        width: calc(100% - 48px);
-        left: 24px;
-        transform: none;
+        flex-direction: row;
+        width: auto;
+        left: 50%;
+        transform: translateX(-50%);
       }
 
       .nav-btn {
         padding: 16px 24px;
-        font-size: 15px;
-        width: 100%;
+        font-size: 18px;
         justify-content: center;
-        min-width: auto;
+        min-width: 200px;
       }
 
       .nav-btn .icon {
@@ -242,37 +295,36 @@
   </style>
 </head>
 <body>
+  <!-- Top right navigation buttons - moved outside container -->
+  <div class="top-nav-buttons">
+    <a href="data-converter.html" class="top-nav-btn">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14,2 14,8 20,8"></polyline>
+        <line x1="16" y1="13" x2="8" y2="13"></line>
+        <line x1="16" y1="17" x2="8" y2="17"></line>
+        <polyline points="10,9 9,9 8,9"></polyline>
+      </svg>
+      Data Converter
+    </a>
+    <a href="data-manager.html" class="top-nav-btn">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+      </svg>
+      Data Manager
+    </a>
+  </div>
+
   <div class="container">
-    <h1>Global Football Cities</h1>
+    <h1>Football Development Index</h1>
     <p class="subtitle">
         The Football Development Index (FDI) is a weighted composite score on a scale from 0 to 100 that quantitatively reflects the overall level of football development in a city, with higher values indicating stronger infrastructure, participation, and industry maturity.
     </p>
     
-    <!-- Navigation buttons positioned at bottom left -->
+    <!-- Center navigation button -->
     <div class="nav-buttons">
       <a href="map.html" class="nav-btn">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <path d="M8 12h8"></path>
-          <path d="M12 8v8"></path>
-        </svg>
         Explore Map
-      </a>
-      <a href="data-converter.html" class="nav-btn">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-          <polyline points="14,2 14,8 20,8"></polyline>
-          <line x1="16" y1="13" x2="8" y2="13"></line>
-          <line x1="16" y1="17" x2="8" y2="17"></line>
-          <polyline points="10,9 9,9 8,9"></polyline>
-        </svg>
-        Data Converter
-      </a>
-      <a href="data-manager.html" class="nav-btn">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-        </svg>
-        Data Manager
       </a>
     </div>
     
