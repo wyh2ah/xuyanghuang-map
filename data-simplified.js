@@ -81,6 +81,7 @@ window.INLINE_DATA = [
     "Porto", 41.1579, -8.6291,
     5841640, 9830000, 192000, 0.34, 30, 0.39, 45, 276, 9, 1400, 140452200, 45, 0.5, "High", 31.8, 30.6
   ]
+  // Modify HERE
 ];
 
 // Function to use inline data
