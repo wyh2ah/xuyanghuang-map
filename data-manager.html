@@ -163,6 +163,28 @@
       margin: 15px 0;
     }
 
+    .export-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    .export-btn {
+      width: 100% !important;
+      background: #10b981 !important;
+      margin: 0 !important;
+      text-align: center;
+      justify-content: center;
+      min-height: 44px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .export-btn:hover {
+      background: #059669 !important;
+    }
+
     .city-list {
       max-height: 300px;
       overflow-y: auto;
@@ -456,20 +478,15 @@
       <!-- Export Section -->
       <div class="export-section">
         <h4>Export Data</h4>
-        <p style="margin-bottom: 10px; font-size: 13px; color: #6b7280;">
+        <p style="margin-bottom: 15px; font-size: 13px; color: #6b7280;">
           Download the files and upload them to your GitHub repository
         </p>
-        <button class="btn success" id="export-all-btn" style="background: #059669; margin-bottom: 10px; width: 100%;">Export All Files (JSON + JS + Excel)</button>
-        <div class="btn-group">
-          <button class="btn success" id="export-json-btn">data.json</button>
-          <button class="btn success" id="export-js-btn">data-simplified.js</button>
-          <button class="btn secondary" id="export-coords-btn">coordinates.json</button>
+        <div class="export-buttons">
+          <button class="btn success export-btn" id="export-all-btn">Export All Files (JSON + JS + Excel)</button>
+          <button class="btn success export-btn" id="export-json-btn">Export data.json</button>
+          <button class="btn success export-btn" id="export-js-btn">Export data-simplified.js</button>
+          <button class="btn success export-btn" id="export-coords-btn">Export coordinates.json</button>
         </div>
-      </div>
-
-      <!-- Navigation -->
-      <div style="text-align: center; margin-top: 20px;">
-        <a href="index.html" class="btn secondary">Back to Home</a>
       </div>
 
       <!-- Status Messages -->
