@@ -82,6 +82,7 @@
       font-size: 14px;
       transition: border-color 0.2s ease;
       background: white;
+      text-align: left;
     }
 
     .form-group input:focus, .form-group select:focus {
@@ -91,7 +92,7 @@
     }
 
     .form-group input[type="number"] {
-      text-align: right;
+      text-align: left;
     }
 
     .coordinate-inputs {
@@ -449,15 +450,6 @@
         <div class="btn-group">
           <button class="btn danger" id="delete-city-btn" disabled>Delete Selected</button>
           <button class="btn secondary" id="edit-city-btn" disabled>Edit Selected</button>
-        </div>
-      </div>
-
-      <!-- Import Section -->
-      <div class="form-section">
-        <h3>Import Data</h3>
-        <input type="file" id="import-file" accept=".json,.xlsx,.csv" style="margin-bottom: 10px;">
-        <div class="btn-group">
-          <button class="btn" id="import-btn">Import File</button>
         </div>
       </div>
 

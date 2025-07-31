@@ -3,7 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <title>World Football Cities Map</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -49,8 +52,8 @@
   </div>
 
   <!-- Bottom Navigation -->
-  <div style="position: absolute; bottom: 24px; left: 24px; z-index: 1000; display: flex; gap: 12px;">
-    <a href="data-converter.html" style="
+  <div class="bottom-nav" style="position: absolute; bottom: 24px; left: 24px; z-index: 1000; display: flex; gap: 12px;">
+    <a href="data-converter.html" class="nav-btn nav-btn-converter" style="
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -73,9 +76,9 @@
         <line x1="16" y1="17" x2="8" y2="17"></line>
         <polyline points="10,9 9,9 8,9"></polyline>
       </svg>
-      Data Converter
+      <span class="nav-text">Data Converter</span>
     </a>
-    <a href="data-manager.html" style="
+    <a href="data-manager.html" class="nav-btn nav-btn-manager" style="
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -94,7 +97,7 @@
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
       </svg>
-      Data Manager
+      <span class="nav-text">Data Manager</span>
     </a>
   </div>
 
