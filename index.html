@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>世界足球城市地图 - 欢迎</title>
+  <title>Global Football Cities - Interactive Map</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     * {
@@ -12,8 +12,8 @@
     }
 
     body {
-      font-family: 'Microsoft YaHei', Arial, sans-serif;
-      background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+      font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3)),
                   url('bg.jpg');
       background-size: cover;
       background-position: center;
@@ -28,9 +28,12 @@
 
     .container {
       text-align: center;
-      max-width: 800px;
-      padding: 40px;
-      border-radius: 20px;
+      max-width: 1020px;
+      padding: 60px 40px;
+      border-radius: 24px;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     h1 {
@@ -61,6 +64,7 @@
       color: rgb(0, 0, 0);
       background: #ffffff;
       border: none;
+      border-radius: 12px;
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -97,23 +101,31 @@
     }
 
     .feature {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 20px;
-      border-radius: 15px;
-      backdrop-filter: blur(5px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      min-width: 200px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 24px;
+      border-radius: 16px;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      min-width: 220px;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.12);
     }
 
     .feature h3 {
-      font-size: 1.2rem;
-      margin-bottom: 10px;
+      font-size: 1.25rem;
+      margin-bottom: 12px;
       color: #4ecdc4;
+      font-weight: 600;
     }
 
     .feature p {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       color: #e9ecef;
+      line-height: 1.5;
     }
 
     @media (max-width: 768px) {
@@ -143,11 +155,12 @@
 </head>
 <body>
   <div class="container">
+    <h1>Global Football Cities</h1>
     <p class="subtitle">
         The Football Development Index (FDI) is a weighted composite score on a scale from 0 to 100 that quantitatively reflects the overall level of football development in a city, with higher values indicating stronger infrastructure, participation, and industry maturity.
     </p>
     
-    <a href="map.html" class="enter-btn">开始探索</a>
+    <a href="map.html" class="enter-btn">Explore the Map</a>
     
   </div>
 </body>

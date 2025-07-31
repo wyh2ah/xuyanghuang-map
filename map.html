@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>世界足球城市地图</title>
+  <title>World Football Cities Map</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <link rel="stylesheet" href="style.css" />
@@ -11,20 +11,20 @@
   <div id="map"></div>
   <div id="info-panel" class="hidden"></div>
   
-  <!-- 图例说明 -->
+  <!-- Map Legend -->
   <div id="legend">
-    <h3>足球发展指数 (FDI)</h3>
+    <h3>Football Development Index</h3>
     <div class="legend-item">
       <div class="legend-color" style="background-color: #006400;"></div>
-      <span>深绿色: FDI > 50 (足球发展强劲)</span>
+      <span>High Development (FDI > 50)</span>
     </div>
     <div class="legend-item">
       <div class="legend-color" style="background-color: #FFA500;"></div>
-      <span>橙色: 30 < FDI ≤ 50 (足球发展中等)</span>
+      <span>Moderate Development (FDI 30-50)</span>
     </div>
     <div class="legend-item">
       <div class="legend-color" style="background-color: #D3D3D3;"></div>
-      <span>浅灰色: FDI ≤ 30 (足球发展较弱)</span>
+      <span>Emerging Markets (FDI < 30)</span>
     </div>
   </div>
   

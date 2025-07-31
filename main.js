@@ -9,7 +9,7 @@ var map = L.map('map', {
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
-  attribution: '© OpenStreetMap 贡献者',
+  attribution: '© OpenStreetMap contributors',
   noWrap: true
 }).addTo(map);
 
@@ -21,7 +21,7 @@ function showInfoPanel(city) {
     html += '<tr><th>' + key + '</th><td>' + city[key] + '</td></tr>';
   }
   
-  // 单独显示 weighted FDI，字体更大
+  // Show weighted FDI prominently
   if (city['weighted FDI']) {
     html += "<tr><th colspan='2'>Weighted FDI</th></tr>";
     html += "<tr><th colspan='2'>" + city['weighted FDI'] + "</th></tr>";
@@ -41,25 +41,25 @@ function hideInfoPanel() {
 fetch('cities.json')
   .then(response => response.json())
   .then(cities => {
-    // 按 weighted FDI 降序排序
+    // Sort cities by development index (highest first)
     cities.sort(function(a, b) {
       return parseFloat(b['weighted FDI']) - parseFloat(a['weighted FDI']);
     });
     
     cities.forEach(function(city) {
-      // 根据 weighted FDI 值设置不同颜色的标记
+      // Color-code markers based on development level
       var fdiValue = parseFloat(city['weighted FDI']) || 0;
       var markerClass;
       
       if (fdiValue > 50) {
-        markerClass = 'marker-strong'; // 深绿色 - 足球发展最强
+        markerClass = 'marker-strong'; // Established football hubs
       } else if (fdiValue > 30) {
-        markerClass = 'marker-medium'; // 橙色 - 足球发展中等
+        markerClass = 'marker-medium'; // Growing football markets
       } else {
-        markerClass = 'marker-weak'; // 浅灰色 - 足球发展较弱
+        markerClass = 'marker-weak'; // Emerging football regions
       }
       
-      // 使用默认的 Leaflet 标记，通过 CSS 类来改变颜色
+      // Add markers to map with custom styling
       var marker = L.marker([city.lat, city.lng]).addTo(map);
       marker.getElement().classList.add(markerClass);
       marker.on('click', function() {
