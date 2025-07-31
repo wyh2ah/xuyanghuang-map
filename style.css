@@ -29,7 +29,7 @@ body {
   z-index: 1001;
   transition: transform 0.3s ease;
   border-left: 1px solid #e8e9ea;
-  padding: 28px 20px;
+  padding: 28px 20px 40px 20px;
 }
 #info-panel.hidden {
   transform: translateX(100%);
@@ -66,11 +66,22 @@ body {
   font-weight: 500;
 }
 
+/* Weighted FDI container styling */
+.fdi-container {
+  margin-top: 20px;
+  padding-bottom: 30px;
+}
+
+.fdi-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
 /* Weighted FDI header styling */
-#info-panel tr:nth-last-child(2) th {
+#info-panel tr.fdi-header th {
   text-align: center;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 20px;
   color: #2563eb;
   padding: 16px 10px;
   background: linear-gradient(135deg, #f8fafc, #e2e8f0);
@@ -79,7 +90,7 @@ body {
 }
 
 /* Weighted FDI value styling */
-#info-panel tr:last-child th {
+#info-panel tr.fdi-value th {
   text-align: center;
   font-weight: 800;
   font-size: 28px;

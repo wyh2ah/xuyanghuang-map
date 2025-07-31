@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Excel to JSON Converter - Global Football Cities</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3)),
+                  url('bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: white;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 40px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+      text-align: center;
+      background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #e9ecef;
+      font-size: 1.1rem;
+    }
+
+    .upload-area {
+      border: 2px dashed rgba(255, 255, 255, 0.3);
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+      margin-bottom: 30px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .upload-area:hover {
+      border-color: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .upload-area.dragover {
+      border-color: #4ecdc4;
+      background: rgba(78, 205, 196, 0.1);
+    }
+
+    .upload-icon {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      opacity: 0.7;
+    }
+
+    .upload-text {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .upload-subtext {
+      color: #adb5bd;
+      font-size: 0.9rem;
+    }
+
+    #file-input {
+      display: none;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      margin: 8px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    .btn:disabled {
+      background: #6b7280;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn.success {
+      background: #10b981;
+    }
+
+    .btn.success:hover {
+      background: #059669;
+    }
+
+    .status {
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+
+    .status.success {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #10b981;
+    }
+
+    .status.error {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #ef4444;
+    }
+
+    .status.info {
+      background: rgba(59, 130, 246, 0.2);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #3b82f6;
+    }
+
+    .preview {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .preview pre {
+      color: #e9ecef;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .actions {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .back-link {
+      color: #4ecdc4;
+      text-decoration: none;
+      margin: 20px 0;
+      display: inline-block;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .instructions {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .instructions h3 {
+      color: #4ecdc4;
+      margin-bottom: 10px;
+    }
+
+    .instructions ol {
+      margin-left: 20px;
+    }
+
+    .instructions li {
+      margin: 8px 0;
+      color: #e9ecef;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Excel to JSON Converter</h1>
+    <p class="subtitle">Convert your Excel data to JSON format for the map application</p>
+    
+    <div class="upload-area" id="upload-area">
+      <div class="upload-icon">📊</div>
+      <div class="upload-text">Drop your Excel file here or click to browse</div>
+      <div class="upload-subtext">Supports .xlsx and .xls files</div>
+      <input type="file" id="file-input" accept=".xlsx,.xls">
+    </div>
+
+    <div id="status"></div>
+    <div id="preview"></div>
+
+    <div class="actions">
+      <button id="convert-btn" class="btn" disabled>Convert to JSON</button>
+      <button id="download-btn" class="btn success" disabled>📥 Download data.json</button>
+      <button id="download-simplified-btn" class="btn success" disabled>📥 Download data-simplified.js</button>
+    </div>
+
+    <div class="instructions">
+      <h3>📋 Instructions</h3>
+      <ol>
+        <li><strong>Upload Excel File:</strong> Select or drag your .xlsx file containing city data</li>
+        <li><strong>Convert:</strong> Click "Convert to JSON" to process the data</li>
+        <li><strong>Download:</strong> Get both JSON and JavaScript versions of your data</li>
+        <li><strong>Replace Files:</strong> Update <code>data.json</code> and <code>data-simplified.js</code> in your project</li>
+        <li><strong>Deploy:</strong> Upload the updated files to your website</li>
+      </ol>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+      <a href="index.html" class="back-link">← Back to Map</a>
+    </div>
+  </div>
+
+  <script>
+    let uploadedData = null;
+    let convertedJsonData = null;
+    let convertedJsData = null;
+
+    // DOM elements
+    const uploadArea = document.getElementById('upload-area');
+    const fileInput = document.getElementById('file-input');
+    const statusDiv = document.getElementById('status');
+    const previewDiv = document.getElementById('preview');
+    const convertBtn = document.getElementById('convert-btn');
+    const downloadBtn = document.getElementById('download-btn');
+    const downloadSimplifiedBtn = document.getElementById('download-simplified-btn');
+
+    // City coordinates mapping
+    const cityCoordinates = {
+      'london': [51.5074, -0.1278],
+      'barcelona': [41.3851, 2.1734],
+      'tokyo': [35.6762, 139.6503],
+      'miami': [25.7617, -80.1918],
+      'manchester': [53.4808, -2.2426],
+      'paris': [48.8566, 2.3522],
+      'rio de janeiro': [-22.9068, -43.1729],
+      'melbourne': [-37.8136, 144.9631],
+      'shanghai': [31.2304, 121.4737],
+      'milan': [45.4642, 9.1900],
+      'berlin': [52.5200, 13.4050],
+      'buenos aires': [-34.6118, -58.3960],
+      'cape town': [-33.9249, 18.4241],
+      'kolkata': [22.5726, 88.3639],
+      'porto': [41.1579, -8.6291],
+      'madrid': [40.4168, -3.7038],
+      'munich': [48.1351, 11.5820],
+      'amsterdam': [52.3676, 4.9041],
+      'lisbon': [38.7223, -9.1393],
+      'rome': [41.9028, 12.4964]
+    };
+
+    // Event listeners
+    uploadArea.addEventListener('click', () => fileInput.click());
+    uploadArea.addEventListener('dragover', handleDragOver);
+    uploadArea.addEventListener('dragleave', handleDragLeave);
+    uploadArea.addEventListener('drop', handleDrop);
+    fileInput.addEventListener('change', handleFileSelect);
+    convertBtn.addEventListener('click', convertToJson);
+    downloadBtn.addEventListener('click', downloadJson);
+    downloadSimplifiedBtn.addEventListener('click', downloadSimplified);
+
+    function showStatus(message, type = 'info') {
+      statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      uploadArea.classList.add('dragover');
+    }
+
+    function handleDragLeave(e) {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        processFile(files[0]);
+      }
+    }
+
+    function handleFileSelect(e) {
+      if (e.target.files.length > 0) {
+        processFile(e.target.files[0]);
+      }
+    }
+
+    function processFile(file) {
+      if (!file.name.match(/\.(xlsx|xls)$/i)) {
+        showStatus('❌ Please select an Excel file (.xlsx or .xls)', 'error');
+        return;
+      }
+
+      showStatus('📁 Reading Excel file...', 'info');
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = new Uint8Array(e.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const firstSheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[firstSheetName];
+          const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+          
+          uploadedData = jsonData;
+          showStatus(`✅ Excel file loaded successfully! Found ${jsonData.length} rows`, 'success');
+          
+          // Show preview
+          const preview = jsonData.slice(0, 5).map((row, i) => 
+            `Row ${i + 1}: ${JSON.stringify(row.slice(0, 3))}...`
+          ).join('\n');
+          previewDiv.innerHTML = `<pre>Preview (first 5 rows):\n${preview}</pre>`;
+          
+          convertBtn.disabled = false;
+          
+        } catch (error) {
+          showStatus(`❌ Error reading Excel file: ${error.message}`, 'error');
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    function convertToJson() {
+      if (!uploadedData) {
+        showStatus('❌ No Excel data to convert', 'error');
+        return;
+      }
+
+      showStatus('🔄 Converting to JSON format...', 'info');
+
+      try {
+        // Process the data to add coordinates
+        const processedData = uploadedData.map((row, index) => {
+          if (index === 0) {
+            // Header row - add Latitude and Longitude columns
+            return ['City Name', 'Latitude', 'Longitude', ...row.slice(1)];
+          } else {
+            // Data rows
+            const cityName = row[0];
+            if (!cityName) return row;
+            
+            const coords = cityCoordinates[cityName.toLowerCase()] || [0, 0];
+            return [cityName, coords[0], coords[1], ...row.slice(1)];
+          }
+        });
+
+        // Create JSON version (replace NaN with null)
+        const jsonVersion = processedData.map(row => 
+          row.map(cell => (typeof cell === 'number' && isNaN(cell)) ? null : cell)
+        );
+
+        // Create JavaScript version for data-simplified.js
+        const jsVersion = `// Complete inline data with coordinates - automatically generated
+window.INLINE_DATA = ${JSON.stringify(jsonVersion, null, 2)};
+
+// Function to use inline data (keep this function)
+function loadInlineData() {
+  if (window.INLINE_DATA && window.INLINE_DATA.length > 0) {
+    console.log('Loading inline data...');
+    window.excelParser.parseData(window.INLINE_DATA);
+    const cities = window.excelParser.getCities();
+    
+    if (cities.length > 0) {
+      loadCitiesData(cities);
+      console.log('Cities loaded from inline data:', cities.length, 'cities found');
+      return true;
+    }
+  }
+  return false;
+}`;
+
+        convertedJsonData = jsonVersion;
+        convertedJsData = jsVersion;
+
+        showStatus(`✅ Conversion completed! Generated ${convertedJsonData.length} rows with coordinates`, 'success');
+        
+        // Show preview of converted data
+        const preview = convertedJsonData.slice(0, 3).map((row, i) => 
+          `Row ${i + 1}: ${JSON.stringify(row.slice(0, 4))}...`
+        ).join('\n');
+        previewDiv.innerHTML = `<pre>Converted data preview:\n${preview}</pre>`;
+
+        downloadBtn.disabled = false;
+        downloadSimplifiedBtn.disabled = false;
+
+      } catch (error) {
+        showStatus(`❌ Error converting data: ${error.message}`, 'error');
+      }
+    }
+
+    function downloadJson() {
+      if (!convertedJsonData) return;
+
+      const jsonString = JSON.stringify(convertedJsonData, null, 2);
+      downloadFile(jsonString, 'data.json', 'application/json');
+      showStatus('📥 data.json downloaded! Replace the file in your project folder.', 'success');
+    }
+
+    function downloadSimplified() {
+      if (!convertedJsData) return;
+
+      downloadFile(convertedJsData, 'data-simplified.js', 'application/javascript');
+      showStatus('📥 data-simplified.js downloaded! Replace the file in your project folder.', 'success');
+    }
+
+    function downloadFile(content, filename, mimeType) {
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
